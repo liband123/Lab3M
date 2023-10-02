@@ -1,5 +1,12 @@
 import java.util.LinkedList;
 
+/**
+ * A basic implementation of {@link IStack} that wraps around a {@link LinkedList}.
+ *
+ * @since 2 October 2023
+ * @author Julian Edwards
+ *
+ */
 public class myStack implements IStack
 {
     // used to internally store the values of this stack
