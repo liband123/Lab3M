@@ -1,0 +1,59 @@
+import java.util.Stack;
+
+public class myPostFixCal implements IPostFixCal {
+
+    @Override
+    public int calculate(IStack stack, String postFixString) throws IllegalArgumentException {
+        Stack<Integer> operandStack = new Stack<>();
+
+        for (char token : postFixString.toCharArray()) {
+            if (Character.isDigit(token)) {
+                // If the token is a digit, push it onto the operand stack
+                operandStack.push(Character.getNumericValue(token));
+            } else if (isOperator(token)) {
+                // If the token is an operator, pop two operands from the stack and perform the operation
+                if (operandStack.size() < 2) {
+                    throw new IllegalArgumentException("Invalid postfix expression");
+                }
+                int operand2 = operandStack.pop();
+                int operand1 = operandStack.pop();
+                int result = performOperation(operand1, operand2, token);
+                operandStack.push(result);
+            } else {
+                // Invalid character encountered
+                throw new IllegalArgumentException("Invalid character in postfix expression: " + token);
+            }
+        }
+
+        // The final result should be on the operand stack
+        if (operandStack.size() != 1) {
+            throw new IllegalArgumentException("Invalid postfix expression");
+        }
+
+        return operandStack.pop();
+    }
+
+    // Helper method to check if a character is an operator
+    private boolean isOperator(char c) {
+        return c == '+' || c == '-' || c == '*' || c == '/';
+    }
+
+    // Helper method to perform an arithmetic operation
+    private int performOperation(int operand1, int operand2, char operator) {
+        switch (operator) {
+            case '+':
+                return operand1 + operand2;
+            case '-':
+                return operand1 - operand2;
+            case '*':
+                return operand1 * operand2;
+            case '/':
+                if (operand2 == 0) {
+                    throw new ArithmeticException("Division by zero");
+                }
+                return operand1 / operand2;
+            default:
+                throw new IllegalArgumentException("Invalid operator: " + operator);
+        }
+    }
+}
