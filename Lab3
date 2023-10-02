@@ -1,0 +1,14 @@
+public class Lab3 {
+    public static void main(String[] args) {
+        // Create instances of IStack and IPostFixCal
+        IStack stack = new myStack();
+        IPostFixCal calculator = new myPostFixCal();
+
+        // Create an object of PostFixCalTesting
+        PostFixCalTesting tester = new PostFixCalTesting();
+
+        // Calculate and print the precision score
+        double precisionScore = tester.precision(stack, calculator);
+        System.out.println("Precision Score: " + precisionScore);
+    }
+}
